@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Adaptive Cyber Honeypot - Online Banking System
 
-## Getting Started
+## Overview
+This project is a high-fidelity **Banking Honeypot Frontend** developed for the cybersecurity project *"AI Adaptive Cyber Honeypot for Online Banking Systems"*. 
 
-First, run the development server:
+It mimics a legitimate online banking application to attract and analyze malicious traffic. While it functions like a normal bank for regular users, it acts as a data collection tool for potential attackers, logging vectors like SQL Injection, XSS, and Credential Stuffing.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Capabilities
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Realistic Banking UI
+- **Professional Design**: Built with Next.js, TypeScript, and Tailwind CSS (v4) to look indistinguishable from a real banking portal.
+- **Functional Pages**: Login, Dashboard, Fund Transfer, Transaction Search, and Support.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Live Traffic Classification
+- **Routing Decision Badge**: Every API response includes a visual indicator showing how the AI backend classified the traffic:
+  - 🟢 **REAL BACKEND**: Safe, legitimate traffic.
+  - 🔴 **HONEYPOT TRAPPED**: Malicious or suspicious traffic routed to the containment environment.
+- **Transparency**: A detailed JSON viewer under every form shows exactly what the backend returned.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Honeypot Vectors
+The application is intentionally designed with specific "traps":
+- **Login (`/login`)**: Captures brute-force and credential stuffing attempts.
+- **Fund Transfer (`/transfer`)**: The "Remarks" field allows special characters to invite Command Injection payloads.
+- **Search (`/search`)**: Vulnerable-looking search bar to attract SQL Injection attacks.
+- **Support (`/support`)**: Message body field designed to capture Cross-Site Scripting (XSS) payloads.
 
-## Learn More
+### 4. Security Monitor (`/security`)
+- A specialized dashboard for "Admins" (or the demo user) to view real-time logs of attacks captured by the honeypot.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Installation & Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-## Deploy on Vercel
+### Steps
+1.  **Clone the Repository**:
+    ```bash
+    git clone <repository-url>
+    cd frontendanti
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3.  **Configure Backend**:
+    Open `src/config.ts` and update the `API_BASE_URL` to point to your live backend (e.g., your ngrok URL or python server).
+    ```typescript
+    // src/config.ts
+    export const API_BASE_URL = "https://your-backend-url.ngrok-free.app";
+    ```
+
+4.  **Run the Application**:
+    ```bash
+    npm run dev
+    ```
+    Access the app at `http://localhost:3000`.
+
+---
+
+## 📂 Project Structure
+
+- **`src/app`**: Next.js App Router pages (`login`, `dashboard`, `transfer`, `search`, `support`, `security`).
+- **`src/components`**:
+    - `ResponseViewer.tsx`: The core component that displays the "AI Routing Decision" and raw JSON response.
+    - `Banner.tsx`: The "AI-Powered Banking Honeypot" fixed header.
+    - `ui/`: Reusable UI components (Input, Button, Card).
+- **`src/config.ts`**: Central configuration for API endpoints.
+
+## ⚠️ Disclaimer
+This application is for **educational and research purposes only**. It is designed to demonstrate honeypot mechanics and traffic analysis. Do not use this code for actual financial services.
